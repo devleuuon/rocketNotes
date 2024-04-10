@@ -3,7 +3,7 @@ const knex = require('../database/knex')
 class NotesController { //TEM QUE IR ADICIONANDO OS MÉTODOS NO NOTES.ROUTES
     async create(request, response) { //CRIAR NOTA
         const { title, description, tags, links } = request.body
-        const { user_id } = request.params
+        const user_id  = request.user.id
 
         const [note_id] = await knex('notes').insert({
             title,
@@ -56,8 +56,10 @@ class NotesController { //TEM QUE IR ADICIONANDO OS MÉTODOS NO NOTES.ROUTES
     }
 
     async index(request, response) { //LISTAR TODAS AS NOTAS E PARA PESQUISAR AS NOTAS
-        const { user_id, title, tags } = request.query //o query para utiliza-lo tem que ir no insomnia "QUERY" e add "name" -> user_id e o "value é o id do usuário."
+        const { title, tags } = request.query //o query para utiliza-lo tem que ir no insomnia "QUERY" e add "name" -> user_id e o "value é o id do usuário."
         
+        const user_id = request.user.id
+
         let notes
 
         if(tags){

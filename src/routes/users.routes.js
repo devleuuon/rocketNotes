@@ -2,6 +2,7 @@
 
 const { Router } = require('express') //importa do 'express'
 const UsersController = require('../controllers/usersController.js') //importando controller para quando a rota for chamada.
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated.js')
 
 const usersRoutes = Router() //inicia projeto
 
@@ -19,7 +20,7 @@ const usersRoutes = Router() //inicia projeto
 const userController = new UsersController()
 
 usersRoutes.post('/', userController.create) //QUERY PARAMS não é obrigatório passar parâmetros ao href
-usersRoutes.put('/:id', userController.update)
+usersRoutes.put('/', ensureAuthenticated, userController.update) //sem o middleware que é o ensureAuthenticated, tem que passar como parametro o '/:id'. com ele pode passar vazio '/' , pois já foi passado o id na funcção ensuremiddleware.
 
 
 module.exports = usersRoutes //exportando o código
