@@ -3,7 +3,7 @@ const multer = require('multer') // para fzer o upload
 const crypto = require('crypto') // vai gerar um hash de forma aleatória, criando diferentes nomes para os rquivos, evitando de um arquivo sobrepor outro com o mesmo nome.
 
 const TMP_FOLDER = path.resolve(__dirname, '..', '..', 'tmp')
-const UPLOADS_FOLDER = path.resolve(__dirname, 'uploads')
+const UPLOADS_FOLDER = path.resolve(TMP_FOLDER, 'uploads')
 
 const MULTER = {
     storage: multer.diskStorage({

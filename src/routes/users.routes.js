@@ -2,6 +2,7 @@
 
 const { Router } = require('express') //importa do 'express'
 const UsersController = require('../controllers/usersController.js') //importando controller para quando a rota for chamada.
+const UserAvatarController = require('../controllers/userAvatarController.js')
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated.js')
 const multer = require('multer')
 const uploadConfig = require('../configs/upload.js')
@@ -21,13 +22,11 @@ const upload = multer(uploadConfig.MULTER)
 
 
 const userController = new UsersController()
+const userAvatarController = new UserAvatarController()
 
 usersRoutes.post('/', userController.create) //QUERY PARAMS não é obrigatório passar parâmetros ao href
 usersRoutes.put('/', ensureAuthenticated, userController.update) //sem o middleware que é o ensureAuthenticated, tem que passar como parametro o '/:id'. com ele pode passar vazio '/' , pois já foi passado o id na funcção ensuremiddleware.
-usersRoutes.patch('/avatar', ensureAuthenticated, upload.single('avatar'), (request, response) => {
-    console.log(request.file.filename);
-    response.json()
-}) //patch é para atualizar um campo especifico. put é para atualizar mais de um campo. o single é pq vai ser carregado um arquivo só.
+usersRoutes.patch('/avatar', ensureAuthenticated, upload.single('avatar'), userAvatarController.update) //patch é para atualizar um campo especifico. put é para atualizar mais de um campo. o single é pq vai ser carregado um arquivo só.
 
 
 module.exports = usersRoutes //exportando o código
