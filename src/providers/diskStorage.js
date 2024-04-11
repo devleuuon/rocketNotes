@@ -17,7 +17,7 @@ class DiskStorage {
 
         try { //vai verificar o status do arquivo, se ele existe ou tem algum problema
             await fs.promises.stat(filePath)
-        } catch {
+        } catch { //se houver algum erro vai retornar.
             return
         }
 
