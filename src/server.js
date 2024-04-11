@@ -8,6 +8,7 @@ require('express-async-errors') //importando biblioteca de erros. "npm install e
 const migrationsRun = require('./database/sqlite/migrations')
 const express = require('express') //pegando o conteúdo da pasta express no node_modules;
 const appError = require('./utils/appError.js') //importando
+const uploadConfig = require('./configs/upload.js')
 
 const routes = require('./routes') //importando routes
 
@@ -16,6 +17,8 @@ migrationsRun() //executa banco de dados
 
 const app = express() // chamando para iniciar a aplicação.
 app.use(express.json()) // passando para o vscode que no insomnia vai tratar com json.
+
+app.use('/files', express.static(uploadConfig.UPLOADS_FOLDER)) //vai mostrar imagem no insomnia.
 
 app.use(routes) //rodando routes
 
