@@ -75,6 +75,7 @@ class NotesController { //TEM QUE IR ADICIONANDO OS MÉTODOS NO NOTES.ROUTES
             .whereLike('notes.title', `%${title}%`) //notes.title é o nome da tabela
             .whereIn('name', filterTags) //whereIn vai comparar se o nome é o mesmo do array criado.
             .innerJoin('notes', 'notes.id', 'tags.note_id') //'tabela'. 'campo p conectar'. 'campo em comum no tags'.
+            .groupBy('notes.id')//não vai repetir o nome da notas.
             .orderBy('notes.title')
 
         } else {
